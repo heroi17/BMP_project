@@ -184,7 +184,10 @@ int getintinput(std::string name){
 }
 int main() {
     // Открываем BMP-файл в бинарном режиме
-    std::ifstream bmpFile("Rainier.bmp", std::ios::binary);
+    std::string open_file_name;
+    std::cout<<"Please, enter a filename whithout part bmp: ";
+    std::cin >> open_file_name;
+    std::ifstream bmpFile(open_file_name + ".bmp", std::ios::binary);
 
     if (!bmpFile.is_open()) {
         std::cerr << "Error opening file." << std::endl;
@@ -231,25 +234,30 @@ int main() {
     // Вы можете обрабатывать изображение по своему усмотрению.
     //header.printData();
     BMPHeader & newHeader = header;
-    unsigned int end_time, start_time;
+    unsigned int start_time, rotation_time, blur_time;
     start_time =  clock();
     imageData = flipImage(imageData, newHeader);
-    end_time = clock();
-    std::cout << "Rotation execution time: " << end_time - start_time <<" ms"<< std::endl;
+    rotation_time = clock() - start_time;
     
     int sigma = getintinput("sigma");
     start_time = clock();
     imageData = approximateGaussianBlurThreePass(imageData, newHeader, sigma);
-    end_time = clock();
-    std::cout << "Blur execution time: " << end_time - start_time <<" ms"<< std::endl;
+    blur_time = clock() - start_time;
+    
+    
+    std::cout << "Rotation execution time: " << rotation_time <<" ms"<< std::endl;
+    std::cout << "Blur execution time: " << blur_time <<" ms"<< std::endl;
 
     const char* newFilename = "NewRainier.bmp";
     if (saveImage(newFilename, imageData, header)) {
-        std::cout << "Image successfully rotated and saved to file \"" << newFilename << "\"." << std::endl;
+        std::cout << "Image successfully saved to file \"" << newFilename << "\"." << std::endl;
     } else {
         std::cerr << "Error while saving the image." << std::endl;
     }
     delete[] imageData;
     // Не забудьте освободить память, когда она больше не нужна.
+    std::cout<<"Press Enter on any character to end the program: ";
+    
+    std::cin>>open_file_name;
     return 0;
 }
