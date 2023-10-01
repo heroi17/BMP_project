@@ -237,7 +237,7 @@ int main() {
     end_time = clock();
     std::cout << "Rotation execution time: " << end_time - start_time <<" ms"<< std::endl;
     
-    int sigma = 10;
+    int sigma = getintinput("sigma");
     start_time = clock();
     imageData = approximateGaussianBlurThreePass(imageData, newHeader, sigma);
     end_time = clock();
