@@ -155,7 +155,7 @@ bool saveImage(const char* filename, unsigned char* imageData, const BMPHeader& 
     std::ofstream bmpFile(filename, std::ios::binary);
 
     if (!bmpFile.is_open()) {
-        std::cerr << "Ошибка открытия файла для сохранения." << std::endl;
+        std::cerr << "File open error." << std::endl;
         return false;
     }
 
