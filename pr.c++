@@ -4,8 +4,10 @@
 #include <ctime>
 
 #pragma pack(push, 1) // Устанавливаем выравнивание структуры на 1 байт
-
+/* Вячеслав Игоревич заставил бы тебя переписать все комменты на английский. Мне тоже хочется, 
+ * когда я вижу столько комментов */
 // Заголовок BMP-файла
+/* Сколько из этих переменных ты используешь? Три? А зачем их тебе так много? Попробуй-ка сделать поменьше */
 struct BMPHeader {
     char signature[2]; // Сигнатура "BM"
     uint32_t fileSize; // Размер файла
@@ -41,6 +43,8 @@ struct BMPHeader {
         printf("Colors: %u\n", colors);
         printf("Important Colors: %u\n", importantColors);
     }
+    /* Отлично расположил тут эти функции, молодец. Даже константыми сделал.
+     * Но название будто немного не то. Ты же тут не оффсет считаешь, а паддинг */
     int get_bytes_width_with_offset() const{
         int w = width * bitsPerPixel/8;
         w += 3 - (w-1)%4;
@@ -53,10 +57,12 @@ struct BMPHeader {
 
 #pragma pack(pop) // Восстанавливаем выравнивание по умолчанию
 
-
+/* Передавать указатель на данные, конечно, нормальный вариант, Си же существует, 
+ * но лучше из всего этого сварганить один хороший класс, который будет хранить данные,
+ * как поле. Тогда их и не потерять, и удалить легко. */
 unsigned char* flipImage(unsigned char* ImageData, BMPHeader &head) {
     uint8_t BytesPerPixel = head.bitsPerPixel / 8;
-    std::swap(head.height, head.width);
+    std::swap(head.height, head.width); //Найс, говоряще
     uint32_t h1 = head.get_bytes_width_with_offset();
     uint32_t new_dataSize_with_offset = head.get_dataSize_with_offset();
     std::swap(head.height, head.width);
@@ -200,7 +206,7 @@ int main() {
 
     // Проверяем сигнатуру BMP
     if (header.signature[0] != 'B' || header.signature[1] != 'M') {
-        std::cerr << "File is not a BMP image." << std::endl;
+        std::cerr << "File is not a BMP image." << std::endl; //Отлично, в правильный поток вывода
         bmpFile.close();
         return 1;
     }
