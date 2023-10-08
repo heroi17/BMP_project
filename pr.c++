@@ -14,7 +14,7 @@ struct BMPHeader {
     uint32_t headerSize;        // doesn't matter (usually 40 byte)
     int32_t width;              // width in pixels
     int32_t height;             // in pixels
-    uint16_t planes;            // thets so stranges things so...)
+    uint16_t planes;            // this is so stranges thing
     uint16_t bitsPerPixel;      // not important for us
     uint32_t compression;       // method of compression (if it equal 0 then it didn't compressed)
     uint32_t dataSize;          // It seems like really important things, but it's always zero if not compressed, so we won't use it.
@@ -28,7 +28,7 @@ struct BMPHeader {
         width_with_offset += 3 - (width_with_offset-1)%4;
         return width_with_offset;
     }
-    int get_dataSize_with_offset() const{//also we need to know the real size of file, course dataSize sometimes equal to dataSize
+    int get_dataSize_with_offset() const{//also we need to know the real size of file, course dataSize sometimes equal to zero
         return get_bytes_width_with_offset()*height;
     }
 };
@@ -42,7 +42,7 @@ unsigned char* flipImage(unsigned char* ImageData, BMPHeader &head) {
     uint32_t NEW_width_bytes_with_offset = head.get_bytes_width_with_offset();
     uint32_t new_dataSize_with_offset = head.get_dataSize_with_offset();
     std::swap(head.height, head.width); // swap to normal
-    unsigned char* newImageData = new unsigned char[new_dataSize_with_offset]; // locate new data for retern
+    unsigned char* newImageData = new unsigned char[new_dataSize_with_offset]; // alocate new data for retern
     uint32_t OLD_width_bytes_with_offset = head.get_bytes_width_with_offset();
 
     int column_pix, row_pix, byte;
@@ -66,7 +66,7 @@ unsigned char* flipImage(unsigned char* ImageData, BMPHeader &head) {
 unsigned char* approximateGaussianBlurThreePass(unsigned char* ImageData, BMPHeader &head, float sigma, int accuracy = 3){
     //
     const uint8_t BytesPerPixel = head.bitsPerPixel / 8; // constant information about one pix
-    const uint32_t data_size = head.get_dataSize_with_offset();
+    const uint32_t data_size = head.get_dataSize_with_offset(); // real datasize(with offset) for allocate memory
     const uint32_t bytes_width_with_offset = head.get_bytes_width_with_offset();
 
     unsigned char* newImageData = new unsigned char[data_size];//allocate memory for service work
@@ -154,7 +154,7 @@ bool saveImage(const char* filename, unsigned char* imageData, const BMPHeader& 
     bmpFile.write(reinterpret_cast<const char*>(imageData), header.get_dataSize_with_offset());
 
     // close savind file
-    bmpFile.close();
+    bmpFile.close();//123123
 
     return true;
 }
@@ -201,7 +201,7 @@ int main() {
         return 1;
     }
 
-    // locate new data for Imagedata(pixels unformation)
+    // alocate new data for Imagedata(pixels unformation)
     unsigned char* imageData = new unsigned char[header.get_dataSize_with_offset()];
 
     // Read file header in our struct
@@ -210,7 +210,7 @@ int main() {
     // Close file becouse all data was geted
     bmpFile.close();
 
-    // part of code where we ritate and blured image(also get time of operation complete)
+    // part of code where we rotating and bluring image(also get time of operation complete)
     BMPHeader & newHeader = header;
     unsigned int start_time, rotation_time, blur_time;
     start_time =  clock();
@@ -233,7 +233,7 @@ int main() {
         std::cerr << "Error while saving the image." << std::endl;
     }
     delete[] imageData;
-    // we have to free up all our memory because we program in c++
+    // we have to free up all our memory
     std::cout<<"Press Enter on any character to end the program: ";
     
     std::cin>>open_file_name; //wait for check information, to see the speed of programm
