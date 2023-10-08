@@ -1,30 +1,32 @@
 # BMP_project
 
-В этом проекте реализованы функции поворота и размытия (приближенного) по Гауссу с параметрами.
+The following features are implemented in this project: rotation and (approximate) Gaussian blur functions with parameters.
 -----------------------------------------------------------------------------------------------
-содержание проекта: 
-1. head.h содержит struct BMPHeader
-   
-2. main.cpp содержит:
-   1) вводим название файла который хотим открыть
-   2) открывается файл
-   3) вызываются функции поворота и размытия
-   4) выводится время выпольнения функций размытия и поворота
-   5) сохраняет повернутое и размытое изображение в NewRainier.bmp
-   6) ожидает ввода любого символа для завершения программы
+Project Contents:
 
-3. bmp_functions.cpp содержит:
-     1) функция поворота на право, для не сжатых файлов bmp
-     2) функция поворота на лево, для не сжатых файлов bmp
-     3) функция приближенного размытия по гаусу, для не сжатых файлов bmp
-4. также содержится 5 изображений(тестовых)
------------------------------------------------------------------------------------------------
-Инструкция:
+1. head.h contains the BMPHeader struct.
 
-1. введите название bmp файла(без .bmp) находящегося в одном каталоге со скомпилированной программой.
-2. Введите значения sigma - параметр размытия.
-3. Изучите время выполнения программы получченое в консоли.
-4. Введите любой символ в консоль и нажмите enter.
+2. main.cpp contains:
+   1) Inputting the filename to open.
+   2) Opening the file.
+   3) Calling the rotation and blur functions.
+   4) Displaying the execution time of the blur and rotation functions.
+   5) Saving the rotated and blurred image as NewRainier.bmp.
+   6) Waiting for any input to terminate the program.
+
+3. bmp_functions.cpp contains:
+   1) Right rotation function for uncompressed BMP files.
+   2) Left rotation function for uncompressed BMP files.
+   3) Approximate Gaussian blur function for uncompressed BMP files.
+
+4. Additionally, there are 5 test images included.
 -----------------------------------------------------------------------------------------------
-Размытие реализовано с использованием следующего материала:
+Instructions:
+
+1. Enter the name of a BMP file (without .bmp extension) located in the same directory as the compiled program.
+2. Enter the sigma value - the blur parameter.
+3. Observe the execution time printed in the console.
+4. Enter any character in the console and press enter.
+-----------------------------------------------------------------------------------------------
+The blur implementation is based on the following material:
 file:///C:/Users/dom/Downloads/Telegram%20Desktop/1775.dokl.pdf
